@@ -19,6 +19,7 @@ namespace BaseWork
                 HttpHelper httpHelper = new HttpHelper();
                 HttpItem httpitem = new HttpItem()
                 {
+                    //oschina综合资讯里面的最新博客
                     URL = "https://www.oschina.net/news/widgets/_news_index_all_list?p=1&type=ajax", //URL     必需项  
                     Method = "GET", //URL     可选项 默认为Get  
                     IsToLower = false, //得到的HTML代码是否转成小写     可选项默认转小写  
