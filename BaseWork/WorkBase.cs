@@ -18,7 +18,7 @@ namespace BaseWork
         //运行的周期分钟
         public int RunCycle = 60;
 
-        public int RunSuccessTime = 1;
+        public int RunSuccessTime = 0;
         /// <summary>
         /// 执行任务方法
         /// </summary>

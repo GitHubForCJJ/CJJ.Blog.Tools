@@ -83,6 +83,10 @@ namespace BaseWork
                     }
 
                 }
+                else
+                {
+                    Console.WriteLine($"暂无更新，{DateTime.Now}");
+                }
             }
             catch(Exception ex)
             {
