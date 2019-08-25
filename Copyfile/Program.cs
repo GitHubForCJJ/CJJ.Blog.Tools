@@ -26,6 +26,34 @@ namespace Copyfile
 
                 CopyFile copy = new CopyFile();
                 var a = copy.GetIISAppInfos();
+                if (a == null || a.Count() <= 0)
+                {
+                    Console.WriteLine("暂无站点");
+                }
+                //存放地址，共享盘文件夹位置
+                string desdic = @"\\192.168.1.9\Sharefile\";
+                foreach (var item in a)
+                {
+                    if (item.Status <= 0)
+                    {
+                        string dstname = Path.Combine(desdic, item.AppName + DateTime.Now.ToString("yyyyMMdd"));
+                        if (!Directory.Exists(dstname))
+                        {
+                            Directory.CreateDirectory(dstname);
+                        }
+                        string batpath = "";
+                        var bulidres = BatHelper.BuildBatFile(item.AppPhysicalPath, dstname, "Administrator", "123", out batpath);
+                        //执行bat
+                        string err = "";
+                        if (bulidres)
+                        {
+                            string res=BatHelper.ExcuteBatFile(batpath, ref err);
+                            Console.WriteLine(err);
+                            Console.WriteLine(res);
+                        }
+                        Console.WriteLine($"创建bat{bulidres}");
+                    }
+                }
 
                 //CopyFile(sourcepath, destpath, inpath);
 
@@ -42,7 +70,7 @@ namespace Copyfile
             Console.ReadLine();
         }
 
-      
+
 
 
 

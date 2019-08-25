@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BatHelper.cs" />
     <Compile Include="CopyFile.cs" />
     <Compile Include="FtpHelper.cs" />
     <Compile Include="IISHelper.cs" />
