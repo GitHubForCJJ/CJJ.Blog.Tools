@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Copyfile.Models;
+using FastDev.Log;
 
 namespace Copyfile
 {
@@ -42,9 +43,9 @@ namespace Copyfile
                 }
                 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               // TxtLogService.WriteLog(e, "获取指定iis应用程序名称异常,id=" + id);
+                LogHelper.WriteLog(ex, "GetIISAppInfos报错");
             }
             return res;
         }

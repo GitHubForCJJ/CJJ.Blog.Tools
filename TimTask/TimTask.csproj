@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{64D56DB7-9900-40A9-9AF1-2FBE33441039}</ProjectGuid>
+    <ProjectGuid>{3B513803-5915-497D-9962-3EA658C1FA37}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Copyfile</RootNamespace>
-    <AssemblyName>Copyfile</AssemblyName>
+    <RootNamespace>TimTask</RootNamespace>
+    <AssemblyName>TimTask</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,25 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastDev.Common">
-      <HintPath>..\dll\FastDev.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="FastDev.Configer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dll\FastDev.Configer.dll</HintPath>
-    </Reference>
-    <Reference Include="FastDev.Log, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dll\FastDev.Log.dll</HintPath>
-    </Reference>
-    <Reference Include="FastDev.XmlHelper">
-      <HintPath>dll\FastDev.XmlHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>dll\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+    <Reference Include="FastDev.Log">
+      <HintPath>..\Copyfile\dll\FastDev.Log.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,22 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BatHelper.cs" />
-    <Compile Include="CopyFile.cs" />
-    <Compile Include="FtpHelper.cs" />
-    <Compile Include="IISHelper.cs" />
-    <Compile Include="Models\AppView.cs" />
-    <Compile Include="Models\ProcessView.cs" />
+    <Compile Include="Basework.cs" />
+    <Compile Include="Copywork.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Runcopy.cs" />
-    <Compile Include="SharpZip.cs" />
-    <Compile Include="XmlHe.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

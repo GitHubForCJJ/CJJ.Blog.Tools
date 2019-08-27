@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FastDev.Log;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -19,24 +20,6 @@ namespace Copyfile
         public static string ExcuteBatFile(string batPath, ref string errMsg)
         {
 
-            //ProcessStartInfo pro = new System.Diagnostics.ProcessStartInfo("cmd.exe");
-            //pro.UseShellExecute = false;
-            //pro.RedirectStandardOutput = true;
-            //pro.RedirectStandardError = true;
-            //pro.CreateNoWindow = true;
-            //pro.FileName = batPath;
-            //pro.Arguments = "argname";
-            ////pro.WorkingDirectory = System.Environment.CurrentDirectory;
-            //System.Diagnostics.Process proc = System.Diagnostics.Process.Start(pro);
-            //System.IO.StreamReader sOut = proc.StandardOutput;
-            //proc.Close();
-            //string results = sOut.ReadToEnd().Trim(); //回显内容  
-            //sOut.Close();
-            ////string[] values = results.Split(new String[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            ////return values[values.Length - 1];
-            //return results;
-
-            #region lod
             if (errMsg == null) throw new ArgumentNullException("errMsg");
             string output="";
             try
@@ -53,19 +36,25 @@ namespace Copyfile
                     process.StartInfo.RedirectStandardError = true;
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                     process.Start();
-                    // process.WaitForExit();
+                    process.WaitForExit();
+                    //while (process.WaitForExit(0) == false)
+                    //{
+                    //    output+= process.StandardOutput.ReadLine() + "\r\n";
+                    //}
                     output = process.StandardOutput.ReadToEnd();
                     errMsg = process.StandardError.ReadToEnd();
+                    LogHelper.WriteLog(batPath + "：：：走完excute");
                 }
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                LogHelper.WriteLog(ex, "ExcuteBatFile");
             }
     
             return output;
-            #endregion
         }
         /// <summary>
         /// 创建bat
@@ -79,6 +68,10 @@ namespace Copyfile
         public static bool BuildBatFile(string sourcepath, string dstpath, string username, string userpsw, out string batfilepath)
         {
             bool res = false;
+            if (dstpath.IndexOf("%SystemDrive%") > -1)
+            {
+                dstpath = dstpath.Replace(@"%SystemDrive%", @"C:");
+            }
             #region 处理文件
             batfilepath = string.Empty;
             string dic = AppDomain.CurrentDomain.BaseDirectory + "Temp" + Path.DirectorySeparatorChar;
@@ -87,7 +80,7 @@ namespace Copyfile
             {
                 info.Create();
             }
-            string name = sourcepath.Replace(':','-').Replace(Path.DirectorySeparatorChar, '-') + DateTime.Now.ToString("yyyyMMdd")+@".bat";
+            string name = sourcepath.Replace(':','-').Replace(Path.DirectorySeparatorChar, '-') + DateTime.Now.ToString("yyyyMMdd HH-mm-ss")+@".bat";
             batfilepath = Path.Combine(dic, name);
             #endregion
 
@@ -117,15 +110,21 @@ namespace Copyfile
                 //登录共享文件夹
                 sw.WriteLine($"net use \"{dstpath}\"  \"{userpsw}\" /user:{username}");
                 //执行复制
-                sw.WriteLine($" robocopy %srcdir% %dstdir% /e /s /xo ");
-                sw.WriteLine("pause");
+                sw.WriteLine($" robocopy %srcdir% %dstdir% /mir /NC /NS /NFL /NDL /MT:128");
+                sw.WriteLine($" echo  copystate:%errorlevel%");
+
                 sw.WriteLine(" rem 结束copy");
                 sw.Close();
 
                 fileStream.Close();
                 res = true;
             }
-            catch { res = false; batfilepath = ""; }
+            catch(Exception ex)
+            {
+                res = false;
+                batfilepath = "";
+                LogHelper.WriteLog(ex, "BuildBatFile");
+            }
 
             finally
             {
@@ -133,6 +132,39 @@ namespace Copyfile
                 fileStream.Dispose();
             }
             #endregion
+            return res;
+        }
+
+        /// <summary>
+        /// 解析bat执行完成后最后的copystate
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static bool ParseCode(int code)
+        {
+            bool res = false;
+            switch (code)
+            {
+                case 0:
+                    res = true;
+                    break;
+                case 1:
+                    res = true;
+                    break;
+                case 3:
+                    res = true;
+                    break;
+                case 5:
+                    res = true;
+                    break;
+                case 6:
+                    res = true;
+                    break;
+                default:
+                    res = false;
+                    break;
+
+            }
             return res;
         }
     }

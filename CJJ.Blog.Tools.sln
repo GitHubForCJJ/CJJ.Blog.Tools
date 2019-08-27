@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseWork", "BaseWork\BaseWo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copyfile", "Copyfile\Copyfile.csproj", "{64D56DB7-9900-40A9-9AF1-2FBE33441039}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimTask", "TimTask\TimTask.csproj", "{3B513803-5915-497D-9962-3EA658C1FA37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{64D56DB7-9900-40A9-9AF1-2FBE33441039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64D56DB7-9900-40A9-9AF1-2FBE33441039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64D56DB7-9900-40A9-9AF1-2FBE33441039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B513803-5915-497D-9962-3EA658C1FA37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B513803-5915-497D-9962-3EA658C1FA37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B513803-5915-497D-9962-3EA658C1FA37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B513803-5915-497D-9962-3EA658C1FA37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

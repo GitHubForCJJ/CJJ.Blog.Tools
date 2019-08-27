@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Copyfile.Models;
+using FastDev.Log;
+using FastDev.XmlHelper;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -6,6 +9,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Copyfile
 {
@@ -13,65 +18,31 @@ namespace Copyfile
     {
         static void Main(string[] args)
         {
-            //资源主路径
-            string sourcepath = @"\\192.168.10.34\";
-            //目标主路径
-            string destpath = @"E:\ceshifile\";
-            //待复制的文件夹
-            string inpath = @"go\ceshi";
             try
             {
-                //var status = connectState(@"\\172.18.20.121", @"kin\wanghaidong", "123456");
-                DateTime start = DateTime.Now;
 
-                CopyFile copy = new CopyFile();
-                var a = copy.GetIISAppInfos();
-                if (a == null || a.Count() <= 0)
-                {
-                    Console.WriteLine("暂无站点");
-                }
-                //存放地址，共享盘文件夹位置
-                string desdic = @"\\192.168.1.9\Sharefile\";
-                foreach (var item in a)
-                {
-                    if (item.Status <= 0)
-                    {
-                        string dstname = Path.Combine(desdic, item.AppName + DateTime.Now.ToString("yyyyMMdd"));
-                        if (!Directory.Exists(dstname))
-                        {
-                            Directory.CreateDirectory(dstname);
-                        }
-                        string batpath = "";
-                        var bulidres = BatHelper.BuildBatFile(item.AppPhysicalPath, dstname, "Administrator", "123", out batpath);
-                        //执行bat
-                        string err = "";
-                        if (bulidres)
-                        {
-                            string res=BatHelper.ExcuteBatFile(batpath, ref err);
-                            Console.WriteLine(err);
-                            Console.WriteLine(res);
-                        }
-                        Console.WriteLine($"创建bat{bulidres}");
-                    }
-                }
+    
+                Runcopy.Copyiis();
 
-                //CopyFile(sourcepath, destpath, inpath);
 
-                //var a = FtpHelper.GetDirctory(@"ces");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("                 IIS复制流程走完              ");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("**********************************************");
 
-                DateTime end = DateTime.Now;
-                var totle = end - start;
-                Console.WriteLine($"总计用时：{totle.TotalSeconds }M");
+                Runcopy.Copyexe();
+
+
             }
             catch (Exception ex)
             {
-
+                LogHelper.WriteLog(ex,"copy任务错误最外层catch");
             }
             Console.ReadLine();
         }
-
-
-
 
 
 
