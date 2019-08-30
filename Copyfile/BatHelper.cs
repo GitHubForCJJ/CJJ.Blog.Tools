@@ -114,6 +114,7 @@ namespace Copyfile
                 sw.WriteLine($" echo  copystate:%errorlevel%");
 
                 sw.WriteLine(" rem 结束copy");
+                sw.WriteLine("exit");
                 sw.Close();
 
                 fileStream.Close();

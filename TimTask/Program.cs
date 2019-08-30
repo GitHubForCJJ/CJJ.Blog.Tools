@@ -10,6 +10,13 @@ namespace TimTask
     {
         static void Main(string[] args)
         {
+            DateTime start = DateTime.Parse("2013-06-06");
+            var totle = DateTime.Now - start;
+            Console.WriteLine(totle.TotalDays);
+            Console.WriteLine(totle.TotalMinutes);
+            Console.WriteLine(totle.TotalSeconds);
+            Console.WriteLine();
+            Console.ReadLine();
         }
     }
 }
