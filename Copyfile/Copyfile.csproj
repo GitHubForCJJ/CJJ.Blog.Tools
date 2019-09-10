@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatHelper.cs" />
+    <Compile Include="Common\EventCopyJob.cs" />
     <Compile Include="CopyFile.cs" />
     <Compile Include="FtpHelper.cs" />
     <Compile Include="IISHelper.cs" />

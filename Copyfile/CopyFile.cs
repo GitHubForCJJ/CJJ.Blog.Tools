@@ -21,7 +21,7 @@ namespace Copyfile
             List<AppView> res = new List<AppView>();
             try
             {
-                using (var mgr = new ServerManager(@"C:\Windows\System32\inetsrv\config\applicationHost.config"))
+                using (var mgr = new ServerManager(@"D:\applicationHost.config"))
                 {
                     var sites = mgr.Sites;
                     if (mgr.Sites.Count() > 0)

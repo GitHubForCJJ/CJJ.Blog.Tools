@@ -20,8 +20,7 @@ namespace Copyfile
         {
             try
             {
-
-    
+ 
                 Runcopy.Copyiis();
 
 
@@ -43,6 +42,18 @@ namespace Copyfile
             }
             Console.ReadLine();
         }
+
+        //private async void StartTask()
+        //{
+        //    ISchedulerFactory sf = new StdSchedulerFactory();
+
+        //    if (_scheduler == null)
+        //    {
+        //        _scheduler = await sf.GetScheduler();
+        //    }
+
+        //    await _scheduler.Start();
+        //}
 
 
 
