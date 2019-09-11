@@ -242,9 +242,9 @@ namespace Copyfile
             try
             {
                 DateTime start1 = DateTime.Now;
-                Console.WriteLine("********************----开始item-----******");
-                Console.WriteLine(start1.ToString("yyyy-MM-dd HH:mm:ss"));
-                Console.WriteLine("**************************");
+                //Console.WriteLine("********************----开始item-----******");
+                //Console.WriteLine(start1.ToString("yyyy-MM-dd HH:mm:ss"));
+                //Console.WriteLine("**************************");
 
 
                 string err = "";

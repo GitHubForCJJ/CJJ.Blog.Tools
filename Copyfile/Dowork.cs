@@ -14,6 +14,15 @@ namespace Copyfile
         public static void WorkItem()
         {
             RunCopyNew runcopynew = new RunCopyNew();
+            DateTime start1 = DateTime.Now;
+            LogHelper.WriteLog(" 本次任务开始备份时间:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "Logs/runsuccess");
+            Console.WriteLine("  ");
+            Console.WriteLine("  ");
+            Console.WriteLine("********************----开始备份:"+DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")+"-----******");
+            Console.WriteLine(start1.ToString("yyyy-MM-dd HH:mm:ss"));
+            Console.WriteLine("**************************");
+            Console.WriteLine("  ");
+            Console.WriteLine("  ");
 
             var a = runcopynew.Buildiisbat();
             var b = runcopynew.Buildexebat();
@@ -49,8 +58,8 @@ namespace Copyfile
                 keyValues.TryAdd(c[i], 0);
             }
 
-            int count = c.Count / 4;
-            ThreadPool.SetMaxThreads(count, count);
+            //int count = c.Count / 4;
+            //ThreadPool.SetMaxThreads(count, count);
             var keylist = keyValues.Keys;
             RunCopyNew runcopynew2 = new RunCopyNew(keyValues);
             foreach (var key in keylist)
