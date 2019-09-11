@@ -1,13 +1,20 @@
-﻿using Copyfile.Models;
+﻿using Copyfile.Common;
+using Copyfile.Models;
+using FastDev.Configer;
 using FastDev.Log;
 using FastDev.XmlHelper;
+using Quartz;
+using Quartz.Impl;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -16,44 +23,88 @@ namespace Copyfile
 {
     class Program
     {
+
+        /// <summary>
+        /// 自动取消订单定时配置
+        /// </summary>
+        public static readonly string AutoCopyTime = ConfigHelper.GetConfigToString("AutoCopyTime");
+
         static void Main(string[] args)
         {
+            ///
+            ///
             try
             {
- 
-                Runcopy.Copyiis();
+                #region 检查对IIS配置文件和program的xml配置的访问权限
 
+                var proxmlpath = ConfigurationManager.AppSettings["exexmlprofix"] ?? "";
 
-                Console.WriteLine("**********************************************");
-                Console.WriteLine("**********************************************");
-                Console.WriteLine("**********************************************");
-                Console.WriteLine("                 IIS复制流程走完              ");
-                Console.WriteLine("**********************************************");
-                Console.WriteLine("**********************************************");
-                Console.WriteLine("**********************************************");
+                FileInfo xml = new FileInfo(proxmlpath);
 
-                Runcopy.Copyexe();
+                if (!xml.Exists)
+                {
+                    Console.WriteLine("请检查 XML配置路径以及访问权限");
+                    return;
+                }
+                #endregion
 
+                StartTask();
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("                 19服务器 iis、exe备份程序启动              ");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("**********************************************");
+                Console.WriteLine("      ");
+                Console.WriteLine("      ");
+                Console.WriteLine("      ");
+                Console.WriteLine("      ");
 
             }
             catch (Exception ex)
             {
-                LogHelper.WriteLog(ex,"copy任务错误最外层catch");
+                LogHelper.WriteLog(ex, "copy任务错误最外层catch");
             }
-            Console.ReadLine();
+
+            Console.Out.WriteLine("");
+            Console.WriteLine("         若需退出请输入 exit 按回车退出...\r\n");
+            string userCommand = string.Empty;
+            while (userCommand != "exit")
+            {
+                if (string.IsNullOrEmpty(userCommand) == false)
+                    Console.WriteLine("                非退出指令,自动忽略...");
+                userCommand = Console.ReadLine();
+            }
         }
 
-        //private async void StartTask()
-        //{
-        //    ISchedulerFactory sf = new StdSchedulerFactory();
 
-        //    if (_scheduler == null)
-        //    {
-        //        _scheduler = await sf.GetScheduler();
-        //    }
+        private static void StartTask()
+        {
+            /// <summary>
+            /// The scheduler
+            /// </summary>
+            IScheduler _scheduler = null;
 
-        //    await _scheduler.Start();
-        //}
+            ISchedulerFactory sf = new StdSchedulerFactory();
+
+            if (_scheduler == null)
+            {
+                _scheduler = sf.GetScheduler();
+            }
+
+            _scheduler.Start();
+
+            #region 自动备份IIS、exe任务
+            //创建任务对象
+            IJobDetail job1 = JobBuilder.Create<EventCopyJob>().WithIdentity("job1", "group1").Build();
+            //创建触发器
+            ITrigger trigger1 = TriggerBuilder.Create().WithIdentity("trigger1", "group1").StartNow().WithCronSchedule(AutoCopyTime).Build();
+            #endregion
+
+            _scheduler.ScheduleJob(job1, trigger1);
+
+        }
 
 
 

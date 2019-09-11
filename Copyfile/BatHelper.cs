@@ -63,10 +63,11 @@ namespace Copyfile
         /// <param name="dstpath"></param>
         /// <param name="username"></param>
         /// <param name="userpsw"></param>
+        /// <param name="exceptpath">拷贝程序排除的路径  多个以空格分隔</param>
         /// <param name="batfilepath"></param>
         /// <returns></returns>
-        public static bool BuildBatFile(string sourcepath, string dstpath, string username, string userpsw, out string batfilepath)
-        {
+        public static bool BuildBatFile(string sourcepath, string dstpath, string username, string userpsw,string exceptpath, out string batfilepath)
+        {          
             bool res = false;
             if (dstpath.IndexOf("%SystemDrive%") > -1)
             {
@@ -74,13 +75,15 @@ namespace Copyfile
             }
             #region 处理文件
             batfilepath = string.Empty;
-            string dic = AppDomain.CurrentDomain.BaseDirectory + "Temp" + Path.DirectorySeparatorChar;
+            string dic = AppDomain.CurrentDomain.BaseDirectory + "Temp" + Path.DirectorySeparatorChar+DateTime.Now.ToString("yyyyMMddHHmm")+ Path.DirectorySeparatorChar;
             DirectoryInfo info = new DirectoryInfo(dic);
             if (!info.Exists)
             {
                 info.Create();
             }
-            string name = sourcepath.Replace(':','-').Replace(Path.DirectorySeparatorChar, '-') + DateTime.Now.ToString("yyyyMMdd HH-mm-ss")+@".bat";
+            var paarr = sourcepath.Split('\\');
+            //bat问价名称 （项目名称-当前版本-当前日期）
+            var name = $"{paarr[paarr.Length - 2]}-{paarr.Last()}-{DateTime.Now.ToString("yyyyMMddHHmmss")}.bat";
             batfilepath = Path.Combine(dic, name);
             #endregion
 
@@ -99,7 +102,7 @@ namespace Copyfile
             }
             try
             {
-                sw = new StreamWriter(fileStream,Encoding.ASCII);
+                sw = new StreamWriter(fileStream,Encoding.Default);
                 sw.WriteLine(@"rem 实现远程拷贝的批处理代码");
                 sw.WriteLine(@"rem 开始copy");
                 sw.WriteLine($"@echo off");
@@ -110,7 +113,15 @@ namespace Copyfile
                 //登录共享文件夹
                 sw.WriteLine($"net use \"{dstpath}\"  \"{userpsw}\" /user:{username}");
                 //执行复制
-                sw.WriteLine($" robocopy %srcdir% %dstdir% /mir /NC /NS /NFL /NDL /MT:128");
+                if (!string.IsNullOrEmpty(exceptpath))
+                {
+                    sw.WriteLine($" robocopy  %srcdir% %dstdir% /mir /copyall /XD {exceptpath} /NC /NS /NFL /NDL /MT:128");
+                }
+                else
+                {
+                    sw.WriteLine($" robocopy %srcdir% %dstdir% /mir /copyall /NC /NS /NFL /NDL /MT:128");
+                }
+              
                 sw.WriteLine($" echo  copystate:%errorlevel%");
 
                 sw.WriteLine(" rem 结束copy");
