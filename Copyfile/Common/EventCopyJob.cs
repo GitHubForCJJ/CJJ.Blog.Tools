@@ -40,14 +40,10 @@ namespace Copyfile.Common
             try
             {
                 Dowork.WorkItem();
-                //if (IsLog)
-                //{
-                //    LogHelper.WriteLog($"创客取消订单-{ret.SerializeObject()}:{DateTime.Now.Ticks}");
-                //}
             }
-            catch
+            catch (Exception ex)
             {
-
+                LogHelper.WriteLog(ex, "EveryTask错误");
             }
         }
 

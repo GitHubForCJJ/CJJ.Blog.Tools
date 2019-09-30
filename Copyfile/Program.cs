@@ -25,7 +25,7 @@ namespace Copyfile
     {
 
         /// <summary>
-        /// 自动取消订单定时配置
+        /// 自动copy定时配置
         /// </summary>
         public static readonly string AutoCopyTime = ConfigHelper.GetConfigToString("AutoCopyTime");
 
@@ -52,7 +52,7 @@ namespace Copyfile
                 Console.WriteLine("**********************************************");
                 Console.WriteLine("**********************************************");
                 Console.WriteLine("**********************************************");
-                Console.WriteLine("                 19服务器 iis、exe备份程序启动              ");
+                Console.WriteLine("              DZXZ   19服务器 iis、exe备份程序启动              ");
                 Console.WriteLine("**********************************************");
                 Console.WriteLine("**********************************************");
                 Console.WriteLine("**********************************************");
