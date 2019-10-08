@@ -31,8 +31,7 @@ namespace Copyfile
 
         static void Main(string[] args)
         {
-            ///
-            ///
+
             try
             {
                 #region 检查对IIS配置文件和program的xml配置的访问权限
@@ -44,8 +43,29 @@ namespace Copyfile
                 if (!xml.Exists)
                 {
                     Console.WriteLine("请检查 XML配置路径以及访问权限");
+                    Console.ReadLine();
                     return;
                 }
+                #endregion
+
+                #region 检查存放备份文件路径
+
+                string desdic = ConfigurationManager.AppSettings["beifenmainpath"] ?? "";
+                string username = ConfigurationManager.AppSettings["username"] ?? "";
+                string usp = ConfigurationManager.AppSettings["userpwd"] ?? "";
+                string ip = ConfigurationManager.AppSettings["beifenip"] ?? "";
+                string file= ConfigurationManager.AppSettings["beifenfile"] ?? "";
+                Ftp ftp = new Ftp(username, usp, ip);
+                ftp.Connect(file);
+                string uri = $"ftp://{ip}/{file}/";
+                DirectoryInfo info = new DirectoryInfo(desdic);
+                if (!info.Exists)
+                {
+                    Console.WriteLine("备份文件路径不存在");
+                    Console.ReadLine();
+                    return;
+                }
+
                 #endregion
 
                 StartTask();

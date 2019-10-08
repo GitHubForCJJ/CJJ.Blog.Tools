@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -31,6 +32,18 @@ namespace Copyfile
                 Console.WriteLine("**************************");
                 Console.WriteLine("  ");
                 Console.WriteLine("  ");
+
+                #region 检查存放备份文件路径
+
+                string desdic = ConfigurationManager.AppSettings["beifenmainpath"] ?? "";
+                string username = ConfigurationManager.AppSettings["username"] ?? "";
+                string usp = ConfigurationManager.AppSettings["userpwd"] ?? "";
+                string ip = ConfigurationManager.AppSettings["beifenip"] ?? "";
+                string file = ConfigurationManager.AppSettings["beifenfile"] ?? "";
+                Ftp ftp = new Ftp(username, usp, ip);
+                ftp.Connect(file);
+
+                #endregion
 
                 var a = runcopynew.Buildiisbat();
                 var b = runcopynew.Buildexebat();
@@ -66,8 +79,6 @@ namespace Copyfile
                     keyValues.TryAdd(c[i], 0);
                 }
 
-                //int count = c.Count / 4;
-                //ThreadPool.SetMaxThreads(count, count);
                 var keylist = keyValues.Keys;
                 RunCopyNew runcopynew2 = new RunCopyNew(keyValues);
                 foreach (var key in keylist)
@@ -84,7 +95,7 @@ namespace Copyfile
 
                 #endregion
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogHelper.WriteLog(ex, "WorkItem错误");
             }

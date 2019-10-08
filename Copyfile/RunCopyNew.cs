@@ -53,7 +53,6 @@ namespace Copyfile
 
                 //存放地址，共享盘文件夹位置
                 string desdic = ConfigurationManager.AppSettings["beifenmainpath"] ?? "";
-                Directory.CreateDirectory(desdic);
 
                 //复制iis配置文件
                 var iisconfig = ConfigurationManager.AppSettings["iisprofix"] ?? "";
@@ -112,7 +111,6 @@ namespace Copyfile
             try
             {
                 string desdic = ConfigurationManager.AppSettings["beifenmainpath"] ?? "";
-                Directory.CreateDirectory(desdic);
 
                 #region 复制WCF服务文件
                 //ProcessManager XML文件位置
