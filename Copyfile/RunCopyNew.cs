@@ -133,11 +133,12 @@ namespace Copyfile
                 //最后文件夹名称
                 var lastonep = patharrp.Last();
                 //倒数第二次文件夹名称
-                var lastsecendp = patharrp[patharrp.Length - 2];
-                var lasttowp = $"{lastsecendp}{Path.DirectorySeparatorChar}{lastonep}";
+                //var lastsecendp = patharrp[patharrp.Length - 2];
+                var lasttowp = $"{lastonep}";
 
                 string dstnamep = Path.Combine(desdic, DateTime.Now.ToString("yyyyMMdd"), "exe", lasttowp);
                 var bulidresp = BatHelper.BuildBatFile(programpath, dstnamep, username, userpwd, exceptfile, out batpath);
+                LogHelper.WriteLog("propath:" + batpath);
                 if (bulidresp)
                 {
                     reslist.Add(batpath);
@@ -260,27 +261,27 @@ namespace Copyfile
                     Console.WriteLine($"{name}复制失败  bat无返回值");
                 }
 
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
-                Console.WriteLine("**********************************************");
-                Console.WriteLine("**********************************************");
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
-                Console.WriteLine("                      拷贝信息                       ");
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
-                Console.WriteLine(res);
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
-                Console.WriteLine("*********************拷贝信息结束*************************");
-                Console.WriteLine("**********************************************");
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
-                Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("**********************************************");
+                //Console.WriteLine("**********************************************");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("                      拷贝信息                       ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine(res);
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("*********************拷贝信息结束*************************");
+                //Console.WriteLine("**********************************************");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
+                //Console.WriteLine("           ");
 
                 var arr = res.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
                 //解析最后一个copystate，和传输速度
@@ -289,6 +290,7 @@ namespace Copyfile
                 if (statestring.IndexOf("copystate:") > -1)
                 {
                     state = Convert.ToInt32(statestring.Replace("copystate:", ""));
+                    LogHelper.WriteLog(state.ToString(), "Logs/state");
                     bool suss = BatHelper.ParseCode(state);
                     string msg = suss ? "成功" : "失败";
                     //执行bat但是失败了

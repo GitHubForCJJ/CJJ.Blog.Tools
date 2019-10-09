@@ -79,13 +79,62 @@ namespace Copyfile
                     keyValues.TryAdd(c[i], 0);
                 }
 
-                var keylist = keyValues.Keys;
+                var keylist = keyValues.Keys.ToList();
                 RunCopyNew runcopynew2 = new RunCopyNew(keyValues);
-                foreach (var key in keylist)
+
+                var dicfile = new Dictionary<int, List<string>>();
+
+                int idx = 1;
+                int count = keylist.Count();
+                int page = 8;
+                int cnt = count % page == 0 ? count / page : count / page + 1;
+                for (int i = 0; i < cnt; i++)
+                {
+                    dicfile.Add(idx, keylist.Skip((idx - 1) * page).Take(page).ToList());
+                    idx++;
+                    //if (dicfile.ContainsKey(idx))
+                    //{
+                    //    dicfile[idx].Add(keylist[i]);
+                    //}
+                    //else
+                    //{
+                    //    dicfile.Add(idx++, new List<string>() { keylist[i]);
+                    //}
+
+                    //if (i % 10 == 0)
+                    //{
+                    //    idx = 1;
+                    //}
+                }
+                //    foreach (var item in dicfile)
+                //    {
+                //        ThreadPool.QueueUserWorkItem(() =>
+                //        {
+                //            foreach (var b in a)
+                //            {
+
+                //            }
+                //        },item);
+                //    }
+
+                //    foreach (var files in dicfile)
+                //    {
+                //        ThreadPool.QueueUserWorkItem(new
+                //        {
+
+                //            foreach (var item in files.Value)
+                //        {
+                //            runcopynew2.Runbat(item);
+                //        }
+                //    };
+                //}
+
+
+                foreach (var key in dicfile)
                 {
                     try
                     {
-                        ThreadPool.QueueUserWorkItem(runcopynew2.Runbat, key);
+                        ThreadPool.QueueUserWorkItem(runcopynew2.Runbat, key.Value);
                     }
                     catch (Exception ex)
                     {
@@ -100,6 +149,6 @@ namespace Copyfile
                 LogHelper.WriteLog(ex, "WorkItem错误");
             }
 
-        }
+}
     }
 }
