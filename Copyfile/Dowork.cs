@@ -86,7 +86,7 @@ namespace Copyfile
 
                 int idx = 1;
                 int count = keylist.Count();
-                int page = 8;
+                int page = 1;
                 int cnt = count % page == 0 ? count / page : count / page + 1;
                 for (int i = 0; i < cnt; i++)
                 {
@@ -106,16 +106,16 @@ namespace Copyfile
                     //    idx = 1;
                     //}
                 }
-                //    foreach (var item in dicfile)
+                //foreach (var item in dicfile)
+                //{
+                //    ThreadPool.QueueUserWorkItem((x) =>
                 //    {
-                //        ThreadPool.QueueUserWorkItem(() =>
+                //        foreach (var b in item)
                 //        {
-                //            foreach (var b in a)
-                //            {
 
-                //            }
-                //        },item);
-                //    }
+                //        }
+                //    }, item);
+                //}
 
                 //    foreach (var files in dicfile)
                 //    {

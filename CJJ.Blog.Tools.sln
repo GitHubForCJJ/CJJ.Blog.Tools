@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copyfile", "Copyfile\Copyfi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimTask", "TimTask\TimTask.csproj", "{3B513803-5915-497D-9962-3EA658C1FA37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallexeTest", "CallexeTest\CallexeTest.csproj", "{5B8F1CBA-BFA7-40BE-BC90-406330B44EB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3B513803-5915-497D-9962-3EA658C1FA37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B513803-5915-497D-9962-3EA658C1FA37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B513803-5915-497D-9962-3EA658C1FA37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B8F1CBA-BFA7-40BE-BC90-406330B44EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B8F1CBA-BFA7-40BE-BC90-406330B44EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B8F1CBA-BFA7-40BE-BC90-406330B44EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B8F1CBA-BFA7-40BE-BC90-406330B44EB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
